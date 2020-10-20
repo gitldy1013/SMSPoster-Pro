@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">SMS Poster</string>
+    <string name="edit_message">Enter HTTP Post URL here ..</string>
+    <string name="button_send">Save</string>
+    <string name="edit_phone">Enter Phone</string>
+    <string name="button_add">add</string>
+    <string name="button_rem">remove</string>
+
+</resources>
