@@ -24,10 +24,9 @@ public class MainActivity extends AppCompatActivity {
         EditText editText = (EditText) findViewById(R.id.edit_message);
         SharedPreferences sharedPref = getSharedPreferences("url", Context.MODE_PRIVATE);
         editText.setText(sharedPref.getString("url", "https://sms.liudongyang.top:334/task/post"));
-        if (!(ContextCompat.checkSelfPermission(this.getApplicationContext(), Manifest.permission.RECEIVE_SMS)
-                == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(this.getApplicationContext(), Manifest.permission.READ_SMS)
-                == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(this.getApplicationContext(), Manifest.permission.INTERNET)
-                == PackageManager.PERMISSION_GRANTED)) {
+        if (!(ContextCompat.checkSelfPermission(this.getApplicationContext(), Manifest.permission.RECEIVE_SMS) == PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(this.getApplicationContext(), Manifest.permission.READ_SMS) == PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(this.getApplicationContext(), Manifest.permission.INTERNET) == PackageManager.PERMISSION_GRANTED)) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECEIVE_SMS, Manifest.permission.READ_SMS, Manifest.permission.INTERNET}, 1);
         }
     }
@@ -44,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
                     flag = false;
             }
             if (flag) {
-                Toast.makeText(MainActivity.this, "授权成功请重新尝试~", Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, "授权成功!", Toast.LENGTH_LONG).show();
             } else {
                 Toast.makeText(MainActivity.this, "授权失败！", Toast.LENGTH_LONG).show();
             }
