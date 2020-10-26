@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -44,8 +45,10 @@ public class MainActivity extends AppCompatActivity {
             }
             if (flag) {
                 Toast.makeText(MainActivity.this, "授权成功!", Toast.LENGTH_LONG).show();
+                doView("授权成功!");
             } else {
                 Toast.makeText(MainActivity.this, "授权失败！", Toast.LENGTH_LONG).show();
+                doView("授权失败!");
             }
         }
     }
@@ -63,8 +66,9 @@ public class MainActivity extends AppCompatActivity {
                 == PackageManager.PERMISSION_GRANTED)) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECEIVE_SMS, Manifest.permission.READ_SMS, Manifest.permission.INTERNET}, 1);
         } else {
-            PostMsg(url, "10086", "测试信息。");
+            PostMsg(url, "10086", "测试信息。", this);
             Toast.makeText(MainActivity.this, "设置成功", Toast.LENGTH_LONG).show();
+            doView("设置成功!已发送测试信息：10086：测试信息。");
         }
     }
 
@@ -73,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
         String phone = editText.getText().toString();
         SMSReciver.phones.add(phone);
         Toast.makeText(MainActivity.this, "添加" + phone + "成功", Toast.LENGTH_LONG).show();
+        doView("添加" + phone + "成功!");
     }
 
     public void remPhone(View view) {
@@ -80,5 +85,12 @@ public class MainActivity extends AppCompatActivity {
         String phone = editText.getText().toString();
         SMSReciver.phones.remove(phone);
         Toast.makeText(MainActivity.this, "移除" + phone + "成功", Toast.LENGTH_LONG).show();
+        doView("移除" + phone + "成功!");
+    }
+
+    public void doView(String msg) {
+        TextView textView = (TextView) findViewById(R.id.out_message);
+        textView.setEnabled(false);
+        textView.append(msg + System.getProperty("line.separator"));
     }
 }

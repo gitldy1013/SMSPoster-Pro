@@ -12,7 +12,7 @@ import cz.msebera.android.httpclient.Header;
 
 
 public class PostUtil {
-    public static void PostMsg(String postUrl, String from, String message) {
+    public static void PostMsg(String postUrl, String from, String message, final MainActivity mainActivity) {
         AsyncHttpClient client = new AsyncHttpClient();
         RequestParams params = new RequestParams();
         params.add("from", from);
@@ -21,14 +21,20 @@ public class PostUtil {
 
             @Override
             public void onSuccess(int i, Header[] headers, byte[] response) {
-                String errorMsg = "Request sent, response: " + new String(response == null ? "".getBytes() : response, StandardCharsets.UTF_8);
-                Log.i("HTTP_REQUEST_OK", errorMsg);
+                String infoMsg = "Request sent, response: " + new String(response == null ? "".getBytes() : response, StandardCharsets.UTF_8);
+                Log.i("HTTP_REQUEST_OK", infoMsg);
+                if (mainActivity != null) {
+                    mainActivity.doView("HTTP_REQUEST_OK:" + infoMsg);
+                }
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] response, Throwable throwable) {
                 String errorMsg = "Request error : code " + statusCode + ", response: " + new String(response == null ? "".getBytes() : response, StandardCharsets.UTF_8);
                 Log.e("HTTP_REQUEST_ERROR", errorMsg);
+                if (mainActivity != null) {
+                    mainActivity.doView("HTTP_REQUEST_ERROR:" + errorMsg);
+                }
             }
         });
     }

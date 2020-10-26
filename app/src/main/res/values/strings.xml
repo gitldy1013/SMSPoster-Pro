@@ -7,5 +7,6 @@
     <string name="edit_phone">Enter Phone</string>
     <string name="button_add">add</string>
     <string name="button_rem">remove</string>
+    <string name="out_message">massage</string>
 
 </resources>

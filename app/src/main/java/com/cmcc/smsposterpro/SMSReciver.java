@@ -44,7 +44,7 @@ public class SMSReciver extends BroadcastReceiver {
                 Toast.makeText(context, "收到了短信：" + msgTxt, Toast.LENGTH_LONG).show();
                 SharedPreferences sharedPref = context.getSharedPreferences("url", Context.MODE_PRIVATE);
                 String url = sharedPref.getString("url", "https://sms.liudongyang.top:334/task/post");
-                PostUtil.PostMsg(url, smsMessage.getOriginatingAddress(), msgTxt);
+                PostUtil.PostMsg(url, smsMessage.getOriginatingAddress(), msgTxt, null);
             }
         }
     }
