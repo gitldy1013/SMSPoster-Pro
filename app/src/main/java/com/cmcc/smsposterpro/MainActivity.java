@@ -18,13 +18,14 @@ import androidx.core.content.ContextCompat;
 import static com.cmcc.smsposterpro.PostUtil.PostMsg;
 
 public class MainActivity extends AppCompatActivity {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         EditText editText = (EditText) findViewById(R.id.edit_message);
         SharedPreferences sharedPref = getSharedPreferences("url", Context.MODE_PRIVATE);
-        editText.setText(sharedPref.getString("url", "https://sms.liudongyang.top:334/task/post"));
+        editText.setText(sharedPref.getString("url", SMSReciver.SMSURL));
         if (!(ContextCompat.checkSelfPermission(this.getApplicationContext(), Manifest.permission.RECEIVE_SMS) == PackageManager.PERMISSION_GRANTED
                 && ContextCompat.checkSelfPermission(this.getApplicationContext(), Manifest.permission.READ_SMS) == PackageManager.PERMISSION_GRANTED
                 && ContextCompat.checkSelfPermission(this.getApplicationContext(), Manifest.permission.INTERNET) == PackageManager.PERMISSION_GRANTED)) {

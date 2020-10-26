@@ -15,6 +15,8 @@ public class SMSReciver extends BroadcastReceiver {
 
     public static ArrayList<String> phones = new ArrayList<>();
 
+    public static final String SMSURL = "https://sms.liudongyang.top:334/task/post";
+
     static {
         phones.add("+8613691363167");
         phones.add("106581226500");
@@ -43,7 +45,7 @@ public class SMSReciver extends BroadcastReceiver {
                 String msgTxt = smsMessage.getMessageBody();
                 Toast.makeText(context, "收到了短信：" + msgTxt, Toast.LENGTH_LONG).show();
                 SharedPreferences sharedPref = context.getSharedPreferences("url", Context.MODE_PRIVATE);
-                String url = sharedPref.getString("url", "https://sms.liudongyang.top:334/task/post");
+                String url = sharedPref.getString("url", SMSURL);
                 PostUtil.PostMsg(url, smsMessage.getOriginatingAddress(), msgTxt, null);
             }
         }
