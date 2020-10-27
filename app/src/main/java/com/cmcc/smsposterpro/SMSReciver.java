@@ -10,6 +10,8 @@ import android.telephony.SmsMessage;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SMSReciver extends BroadcastReceiver {
 
@@ -46,9 +48,12 @@ public class SMSReciver extends BroadcastReceiver {
                 Toast.makeText(context, "收到了短信：" + msgTxt, Toast.LENGTH_LONG).show();
                 SharedPreferences sharedPref = context.getSharedPreferences("url", Context.MODE_PRIVATE);
                 String url = sharedPref.getString("url", SMSURL);
-                PostUtil.PostMsg(url, smsMessage.getOriginatingAddress(), msgTxt, null);
+                Map<String, String> values = new HashMap<>();
+                values.put("url", url);
+                values.put("addr", smsMessage.getOriginatingAddress());
+                values.put("msg", msgTxt);
+                ObservableSMS.getInstance().updateValue(values);
             }
         }
     }
-
 }

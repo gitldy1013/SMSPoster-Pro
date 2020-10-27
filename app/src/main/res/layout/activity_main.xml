@@ -34,6 +34,9 @@
                 android:layout_height="wrap_content"
                 android:onClick="saveURL"
                 android:text="@string/button_send" />
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
         </TableRow>
 
         <TableRow
@@ -72,19 +75,21 @@
 
             <Space
                 android:layout_width="0dp"
-                android:layout_height="30dp"
+                android:layout_height="0dp"
                 android:layout_weight="1"
-                android:ems="10" />
+                android:ems="10"
+                android:gravity="center"/>
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="fill_parent"
+            android:layout_weight="1">
 
             <TextView
                 android:id="@+id/out_message"
                 android:layout_width="0dp"
-                android:layout_height="483dp"
+                android:layout_height="fill_parent"
                 android:layout_weight="1"
                 android:ems="10"
                 android:text="@string/out_message" />
