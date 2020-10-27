@@ -113,6 +113,12 @@ public class MainActivity extends AppCompatActivity implements SmsServer {
         textView.append(System.getProperty("line.separator") + msg);
     }
 
+    public void clean(View view) {
+        TextView textView = (TextView) findViewById(R.id.out_message);
+        textView.setEnabled(true);
+        textView.clearComposingText();
+    }
+
     @Override
     public void update(ObservableSMS o, Map<String, String> values) {
         String url = values.get("url");

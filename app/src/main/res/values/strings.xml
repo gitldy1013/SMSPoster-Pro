@@ -8,5 +8,6 @@
     <string name="button_add">add</string>
     <string name="button_rem">remove</string>
     <string name="out_message">massage</string>
+    <string name="clean">clean</string>
 
 </resources>

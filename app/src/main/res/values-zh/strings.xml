@@ -8,6 +8,7 @@
     <string name="button_add">添加</string>
     <string name="button_rem">删除</string>
     <string name="out_message">控制台</string>
+    <string name="clean">清屏</string>
 
 </resources>
 
