@@ -116,7 +116,7 @@ public class MainActivity extends AppCompatActivity implements SmsServer {
     public void clean(View view) {
         TextView textView = (TextView) findViewById(R.id.out_message);
         textView.setEnabled(true);
-        textView.clearComposingText();
+        textView.setText("");
     }
 
     @Override
