@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements SmsServer {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        EditText editText = (EditText) findViewById(R.id.edit_message);
+        EditText editText = findViewById(R.id.edit_message);
         SharedPreferences sharedPref = getSharedPreferences("url", Context.MODE_PRIVATE);
         editText.setText(sharedPref.getString("url", SMSReciver.SMSURL));
         getPermission();
@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements SmsServer {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void saveURL(View view) {
-        EditText editText = (EditText) findViewById(R.id.edit_message);
+        EditText editText = findViewById(R.id.edit_message);
         String url = editText.getText().toString();
         SharedPreferences sharedPref = getSharedPreferences("url", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements SmsServer {
     }
 
     public void addPhone(View view) {
-        EditText editText = (EditText) findViewById(R.id.edit_phone);
+        EditText editText = findViewById(R.id.edit_phone);
         String phone = editText.getText().toString();
         SMSReciver.phones.add(phone);
         Toast.makeText(MainActivity.this, "添加" + phone + "成功", Toast.LENGTH_LONG).show();
@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements SmsServer {
     }
 
     public void remPhone(View view) {
-        EditText editText = (EditText) findViewById(R.id.edit_phone);
+        EditText editText = findViewById(R.id.edit_phone);
         String phone = editText.getText().toString();
         SMSReciver.phones.remove(phone);
         Toast.makeText(MainActivity.this, "移除" + phone + "成功", Toast.LENGTH_LONG).show();
@@ -107,14 +107,14 @@ public class MainActivity extends AppCompatActivity implements SmsServer {
     }
 
     public void doView(String msg) {
-        TextView textView = (TextView) findViewById(R.id.out_message);
+        TextView textView = findViewById(R.id.out_message);
         textView.setEnabled(true);
         textView.setMovementMethod(ScrollingMovementMethod.getInstance());
         textView.append(System.getProperty("line.separator") + msg);
     }
 
     public void clean(View view) {
-        TextView textView = (TextView) findViewById(R.id.out_message);
+        TextView textView = findViewById(R.id.out_message);
         textView.setEnabled(true);
         textView.setText("");
     }
