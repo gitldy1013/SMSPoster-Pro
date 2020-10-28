@@ -15,6 +15,7 @@
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <EditText
                 android:id="@+id/edit_message"
                 android:layout_width="0dp"
@@ -28,22 +29,27 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:onClick="saveURL"
                 android:text="@string/button_send" />
+
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:onClick="showContacts"
+                android:text="@string/button_contacts" />
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <EditText
                 android:id="@+id/edit_phone"
                 android:layout_width="0dp"
@@ -56,16 +62,19 @@
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:onClick="addPhone"
                 android:text="@string/button_add" />
+
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:onClick="clean"
                 android:text="@string/clean" />
+
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -82,7 +91,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:ems="10"
-                android:gravity="center"/>
+                android:gravity="center" />
         </TableRow>
 
         <TableRow
