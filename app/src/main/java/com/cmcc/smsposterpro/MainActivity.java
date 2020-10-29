@@ -171,8 +171,14 @@ public class MainActivity extends AppCompatActivity implements SmsServer {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void showContacts(View view) {
-        ArrayList<MyContacts> contacts = ContactUtils.getAllContacts(MainActivity.this);
-        doView(contacts.toString());
+        if (getPermission()) {
+            ArrayList<MyContacts> contacts = ContactUtils.getAllContacts(MainActivity.this);
+            doView(contacts.toString());
+        } else {
+            Toast.makeText(MainActivity.this, "需要先授权", Toast.LENGTH_LONG).show();
+            doView("缺少必要权限！");
+        }
     }
 }
