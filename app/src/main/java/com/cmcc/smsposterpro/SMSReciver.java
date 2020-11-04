@@ -22,6 +22,7 @@ public class SMSReciver extends BroadcastReceiver {
     static {
         phones.add("+8613691363167");
         phones.add("106581226500");
+        phones.add("106916799667996");
     }
 
     @Override

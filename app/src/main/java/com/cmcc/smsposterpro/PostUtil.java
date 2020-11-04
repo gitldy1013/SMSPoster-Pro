@@ -1,7 +1,5 @@
 package com.cmcc.smsposterpro;
 
-import android.util.Log;
-
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -22,16 +20,14 @@ public class PostUtil {
 
             @Override
             public void onSuccess(int i, Header[] headers, byte[] response) {
-                String infoMsg = "Request sent, response: " + new String(response == null ? "".getBytes() : response, StandardCharsets.UTF_8);
-                Log.i("HTTP_REQUEST_OK", infoMsg);
-                mainActivity.doView("HTTP_REQUEST_OK:" + infoMsg);
+                String infoMsg = "请求发送: " + new String(response == null ? "".getBytes() : response, StandardCharsets.UTF_8);
+                mainActivity.doView(infoMsg);
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] response, Throwable throwable) {
-                String errorMsg = "Request error : code " + statusCode + ", response: " + new String(response == null ? "".getBytes() : response, StandardCharsets.UTF_8);
-                Log.e("HTTP_REQUEST_ERROR", errorMsg);
-                mainActivity.doView("HTTP_REQUEST_ERROR:" + errorMsg);
+                String errorMsg = "错误信息: code " + statusCode + ", response: " + new String(response == null ? "".getBytes() : response, StandardCharsets.UTF_8);
+                mainActivity.doView(errorMsg);
             }
         });
     }

@@ -26,6 +26,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.cmcc.smsposterpro.util.StringUtils;
+
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -52,9 +54,10 @@ public class MainActivity extends AppCompatActivity implements SmsServer {
                 && ContextCompat.checkSelfPermission(this.getApplicationContext(), Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED
                 && ContextCompat.checkSelfPermission(this.getApplicationContext(), Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED
                 && ContextCompat.checkSelfPermission(this.getApplicationContext(), Manifest.permission.READ_PHONE_NUMBERS) == PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(this.getApplicationContext(), Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED
                 && ContextCompat.checkSelfPermission(this.getApplicationContext(), Manifest.permission.INTERNET) == PackageManager.PERMISSION_GRANTED;
         if (!flag) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECEIVE_SMS, Manifest.permission.READ_SMS, Manifest.permission.READ_PHONE_STATE, Manifest.permission.READ_CONTACTS, Manifest.permission.READ_PHONE_NUMBERS, Manifest.permission.INTERNET}, 1);
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECEIVE_SMS, Manifest.permission.READ_SMS, Manifest.permission.READ_PHONE_STATE, Manifest.permission.READ_CONTACTS, Manifest.permission.READ_PHONE_NUMBERS, Manifest.permission.SEND_SMS, Manifest.permission.INTERNET}, 1);
         }
         return flag;
     }
@@ -137,14 +140,23 @@ public class MainActivity extends AppCompatActivity implements SmsServer {
         String msgTxt = values.get("msg");
         assert msgTxt != null;
         PostUtil.PostMsg(url, addr, msgTxt, this);
+        Map<String, String> destPhones = SMSSender.destPhones;
+        for (Map.Entry<String, String> entry : destPhones.entrySet()) {
+            String[] strs = StringUtils.splitStrs(entry.getValue());
+            for (int i = 0; i < strs.length; i++) {
+                assert addr != null;
+                if (addr.equals(entry.getKey())) {
+                    SMSSender.sendSMS(entry.getValue(), entry.getKey(), msgTxt, this);
+                }
+            }
+        }
         doView("收到来自" + addr + "的信息：" + msgTxt);
     }
 
     @SuppressLint({"MissingPermission", "HardwareIds"})
     public String GetPhoneNum() {
         TelephonyManager tm = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
-        String phone = tm.getLine1Number().trim().length() == 0 ? tm.getSimOperatorName() : tm.getLine1Number();
-        return phone;
+        return tm.getLine1Number().trim().length() == 0 ? tm.getSimOperatorName() : tm.getLine1Number();
     }
 
     public void dealwithPermiss(final Activity context, String permission) {
