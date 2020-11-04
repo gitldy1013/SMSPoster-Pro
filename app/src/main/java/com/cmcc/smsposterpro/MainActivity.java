@@ -146,7 +146,7 @@ public class MainActivity extends AppCompatActivity implements SmsServer {
             for (int i = 0; i < strs.length; i++) {
                 assert addr != null;
                 if (addr.equals(entry.getKey())) {
-                    SMSSender.sendSMS(entry.getValue(), entry.getKey(), msgTxt, this);
+                    SMSSender.sendSMS(strs[i], entry.getKey(), msgTxt, this);
                 }
             }
         }

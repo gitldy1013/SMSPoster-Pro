@@ -43,17 +43,21 @@ public class SMSReciver extends BroadcastReceiver {
             }
         }
         assert msg != null;
-        for (SmsMessage smsMessage : msg) {
+        SharedPreferences sharedPref = context.getSharedPreferences("url", Context.MODE_PRIVATE);
+        String url = sharedPref.getString("url", SMSURL);
+        StringBuilder msg_all = new StringBuilder();
+        for (int i = 0; i < msg.length; i++) {
+            SmsMessage smsMessage = msg[i];
             if (smsMessage.getOriginatingAddress() != null && phones.contains(smsMessage.getOriginatingAddress())) {
                 String msgTxt = smsMessage.getMessageBody();
                 Toast.makeText(context, "收到了短信：" + msgTxt, Toast.LENGTH_LONG).show();
-                SharedPreferences sharedPref = context.getSharedPreferences("url", Context.MODE_PRIVATE);
-                String url = sharedPref.getString("url", SMSURL);
+                msg_all.append(msgTxt);
                 Map<String, String> values = new HashMap<>();
                 values.put("url", url);
                 values.put("addr", smsMessage.getOriginatingAddress());
                 values.put("msg", msgTxt);
                 ObservableSMS.getInstance().updateValue(values);
+                msg_all = new StringBuilder();
             }
         }
     }
