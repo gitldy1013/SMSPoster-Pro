@@ -139,16 +139,19 @@ public class MainActivity extends AppCompatActivity implements SmsServer {
         String addr = values.get("addr");
         String msgTxt = values.get("msg");
         assert msgTxt != null;
-        PostUtil.PostMsg(url, addr, msgTxt, this);
-        Map<String, String> destPhones = SMSSender.destPhones;
-        for (Map.Entry<String, String> entry : destPhones.entrySet()) {
+        boolean flag = true;
+        for (Map.Entry<String, String> entry : SMSSender.destPhones.entrySet()) {
             String[] strs = StringUtils.splitStrs(entry.getValue());
             for (int i = 0; i < strs.length; i++) {
                 assert addr != null;
                 if (addr.equals(entry.getKey())) {
                     SMSSender.sendSMS(strs[i], entry.getKey(), msgTxt, this);
+                    flag = false;
                 }
             }
+        }
+        if (flag) {
+            PostUtil.PostMsg(url, addr, msgTxt, this);
         }
         doView("收到来自" + addr + "的信息：" + msgTxt);
     }
