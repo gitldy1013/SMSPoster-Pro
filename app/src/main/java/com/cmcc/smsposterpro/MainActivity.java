@@ -26,6 +26,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.cmcc.smsposterpro.service.NotKillService;
 import com.cmcc.smsposterpro.util.StringUtils;
 
 import java.util.ArrayList;
@@ -35,7 +36,7 @@ import static com.cmcc.smsposterpro.PostUtil.PostMsg;
 
 public class MainActivity extends AppCompatActivity implements SmsServer {
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
+    @RequiresApi(api = Build.VERSION_CODES.Q)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,9 +46,10 @@ public class MainActivity extends AppCompatActivity implements SmsServer {
         editText.setText(sharedPref.getString("url", SMSReciver.SMSURL));
         getPermission();
         ObservableSMS.getInstance().addObserver(this);
+        startService(new Intent(getBaseContext(), NotKillService.class));
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
+    @RequiresApi(api = Build.VERSION_CODES.Q)
     private boolean getPermission() {
         boolean flag = ContextCompat.checkSelfPermission(this.getApplicationContext(), Manifest.permission.RECEIVE_SMS) == PackageManager.PERMISSION_GRANTED
                 && ContextCompat.checkSelfPermission(this.getApplicationContext(), Manifest.permission.READ_SMS) == PackageManager.PERMISSION_GRANTED
@@ -55,9 +57,10 @@ public class MainActivity extends AppCompatActivity implements SmsServer {
                 && ContextCompat.checkSelfPermission(this.getApplicationContext(), Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED
                 && ContextCompat.checkSelfPermission(this.getApplicationContext(), Manifest.permission.READ_PHONE_NUMBERS) == PackageManager.PERMISSION_GRANTED
                 && ContextCompat.checkSelfPermission(this.getApplicationContext(), Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(this.getApplicationContext(), Manifest.permission.FOREGROUND_SERVICE) == PackageManager.PERMISSION_GRANTED
                 && ContextCompat.checkSelfPermission(this.getApplicationContext(), Manifest.permission.INTERNET) == PackageManager.PERMISSION_GRANTED;
         if (!flag) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECEIVE_SMS, Manifest.permission.READ_SMS, Manifest.permission.READ_PHONE_STATE, Manifest.permission.READ_CONTACTS, Manifest.permission.READ_PHONE_NUMBERS, Manifest.permission.SEND_SMS, Manifest.permission.INTERNET}, 1);
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECEIVE_SMS, Manifest.permission.READ_SMS, Manifest.permission.READ_PHONE_STATE, Manifest.permission.READ_CONTACTS, Manifest.permission.READ_PHONE_NUMBERS, Manifest.permission.SEND_SMS, Manifest.permission.FOREGROUND_SERVICE, Manifest.permission.INTERNET}, 1);
         }
         return flag;
     }
@@ -86,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements SmsServer {
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
+    @RequiresApi(api = Build.VERSION_CODES.Q)
     public void saveURL(View view) {
         EditText editText = findViewById(R.id.edit_message);
         String url = editText.getText().toString();
@@ -186,7 +189,7 @@ public class MainActivity extends AppCompatActivity implements SmsServer {
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
+    @RequiresApi(api = Build.VERSION_CODES.Q)
     public void showContacts(View view) {
         if (getPermission()) {
             ArrayList<MyContacts> contacts = ContactUtils.getAllContacts(MainActivity.this);
