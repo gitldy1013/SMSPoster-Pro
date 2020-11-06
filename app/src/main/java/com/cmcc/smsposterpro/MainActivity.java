@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements SmsServer {
         editText.setText(sharedPref.getString("url", SMSReciver.SMSURL));
         getPermission();
         ObservableSMS.getInstance().addObserver(this);
-        startService(new Intent(getBaseContext(), NotKillService.class));
+//        startService(new Intent(getBaseContext(), NotKillService.class));
     }
 
     @RequiresApi(api = Build.VERSION_CODES.Q)
