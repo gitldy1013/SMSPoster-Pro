@@ -166,10 +166,10 @@ public class MainActivity extends AppCompatActivity implements SmsServer {
     }
 
     public void dealwithPermiss(final Activity context, String permission) {
-        if (!ActivityCompat.shouldShowRequestPermissionRationale(context, permission)) {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(context, permission)) {
             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
             builder.setTitle("操作提示")
-                    .setMessage("注意：当前缺少必要权限！\n请点击“设置”-“权限”-打开所需权限\n最后点击两次后退按钮，即可返回")
+                    .setMessage("注意：当前缺少必要权限！\n请点击“设置”-“权限”-打开所需权限")
                     .setPositiveButton("去授权", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
