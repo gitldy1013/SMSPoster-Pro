@@ -17,7 +17,7 @@ public class SMSReciver extends BroadcastReceiver {
 
     public static ArrayList<String> phones = new ArrayList<>();
 
-    public static final String SMSURL = "https://sms.liudongyang.top:334/task/post";
+    public static final String SMSURL = "https://sms.liudongyang.top/task/post";
 
     static {
         phones.add("+8613691363167");
