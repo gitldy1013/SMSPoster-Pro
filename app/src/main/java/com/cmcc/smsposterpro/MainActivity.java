@@ -26,10 +26,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.cmcc.smsposterpro.service.AliveService;
 import com.cmcc.smsposterpro.service.NotKillService;
 import com.cmcc.smsposterpro.util.StringUtils;
+import com.xdandroid.hellodaemon.DaemonEnv;
+import com.xdandroid.hellodaemon.IntentWrapper;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import static com.cmcc.smsposterpro.PostUtil.PostMsg;
@@ -47,6 +51,28 @@ public class MainActivity extends AppCompatActivity implements SmsServer {
         getPermission();
         ObservableSMS.getInstance().addObserver(this);
 //        startService(new Intent(getBaseContext(), NotKillService.class));
+    }
+
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_start:
+                AliveService.sShouldStopService = false;
+                DaemonEnv.startServiceMayBind(AliveService.class);
+                doView("保活服务已启动");
+                break;
+            case R.id.btn_white:
+                List<IntentWrapper> wrappers = IntentWrapper.whiteListMatters(this, "短信转发服务的持续运行");
+                break;
+            case R.id.btn_stop:
+                AliveService.stopService();
+                doView("保活服务已关闭");
+                break;
+        }
+    }
+
+    //防止华为机型未加入白名单时按返回键回到桌面再锁屏后几秒钟进程被杀
+    public void onBackPressed() {
+        IntentWrapper.onBackPressed(this);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.Q)
