@@ -27,7 +27,6 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.cmcc.smsposterpro.service.AliveService;
-import com.cmcc.smsposterpro.service.NotKillService;
 import com.cmcc.smsposterpro.util.StringUtils;
 import com.xdandroid.hellodaemon.DaemonEnv;
 import com.xdandroid.hellodaemon.IntentWrapper;
@@ -39,6 +38,8 @@ import java.util.Map;
 import static com.cmcc.smsposterpro.PostUtil.PostMsg;
 
 public class MainActivity extends AppCompatActivity implements SmsServer {
+
+    static boolean active = false;
 
     @RequiresApi(api = Build.VERSION_CODES.Q)
     @Override
@@ -224,5 +225,19 @@ public class MainActivity extends AppCompatActivity implements SmsServer {
             Toast.makeText(MainActivity.this, "需要先授权", Toast.LENGTH_LONG).show();
             doView("缺少必要权限！");
         }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        active = true;
+    }
+
+
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        active = false;
     }
 }

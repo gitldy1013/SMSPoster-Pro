@@ -1,5 +1,6 @@
 package com.cmcc.smsposterpro;
 
+import android.content.Context;
 import android.telephony.SmsManager;
 import android.widget.Toast;
 
@@ -26,5 +27,14 @@ public class SMSSender {
         }
         Toast.makeText(mainActivity, "短信发送完成", Toast.LENGTH_SHORT).show();
         mainActivity.doView("短信发送完成: 从" + scPhone + "发送至" + phone + " 短信内容为：" + content);
+    }
+
+    public static void sendSMS(String phone, String scPhone, String content, Context context) {
+        SmsManager manager = SmsManager.getDefault();
+        ArrayList<String> strings = manager.divideMessage(content);
+        for (int i = 0; i < strings.size(); i++) {
+            manager.sendTextMessage(phone, null, content, null, null);
+        }
+        Toast.makeText(context, "短信发送完成", Toast.LENGTH_SHORT).show();
     }
 }

@@ -9,9 +9,13 @@ import android.os.Bundle;
 import android.telephony.SmsMessage;
 import android.widget.Toast;
 
+import com.cmcc.smsposterpro.util.StringUtils;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import static com.cmcc.smsposterpro.MainActivity.active;
 
 public class SMSReciver extends BroadcastReceiver {
 
@@ -23,7 +27,7 @@ public class SMSReciver extends BroadcastReceiver {
         phones.add("+8613691363167");
         phones.add("106581226500");
 
-        phones.add("106940391658888");
+        phones.add("10693943799667658888");
     }
 
     @Override
@@ -57,9 +61,37 @@ public class SMSReciver extends BroadcastReceiver {
                 values.put("url", url);
                 values.put("addr", smsMessage.getOriginatingAddress());
                 values.put("msg", msgTxt);
-                ObservableSMS.getInstance().updateValue(values);
+                Toast.makeText(context, "后台运行：" + active, Toast.LENGTH_LONG).show();
+                if (active) {
+                    ObservableSMS.getInstance().updateValue(values);
+                } else {
+                    doPostSms(values, context);
+                }
                 msg_all = new StringBuilder();
             }
         }
     }
+
+    private void doPostSms(Map<String, String> values, Context context) {
+        String url = values.get("url");
+        String addr = values.get("addr");
+        String msgTxt = values.get("msg");
+        assert msgTxt != null;
+        boolean flag = true;
+        for (Map.Entry<String, String> entry : SMSSender.destPhones.entrySet()) {
+            String[] strs = StringUtils.splitStrs(entry.getValue());
+            for (int i = 0; i < strs.length; i++) {
+                assert addr != null;
+                if (addr.equals(entry.getKey())) {
+                    SMSSender.sendSMS(strs[i], entry.getKey(), msgTxt, context);
+                    flag = false;
+                }
+            }
+        }
+        if (flag) {
+            PostUtil.PostMsg(url, addr, msgTxt, "ldy", context);
+        }
+        Toast.makeText(context, "收到来自" + addr + "的信息：" + msgTxt, Toast.LENGTH_LONG).show();
+    }
+
 }
