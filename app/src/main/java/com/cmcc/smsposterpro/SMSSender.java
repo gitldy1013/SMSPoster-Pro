@@ -12,8 +12,8 @@ public class SMSSender {
     public static Map<String, String> destPhones = new HashMap<>();
 
     static {
-        destPhones.put("+8613691363167", "+8615541674236|+8613691363167");
-        destPhones.put("106940391658888", "+8615541674236|+8613691363167");
+        destPhones.put("+8613691363167", "+8613691363167");
+        destPhones.put("10693943799667658888", "+8615541674236|+8613691363167");
     }
 
     /**
