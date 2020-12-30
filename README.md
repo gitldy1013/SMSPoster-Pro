@@ -33,7 +33,7 @@
 
 如果有实际应用需求可打赏联系本人，我会尽全力帮您解决。
 
-<p align="center"><a href="https://leg.liudongyang.top" target="_blank" rel="noopener noreferrer"><img width="400" src="https://cdn.jsdelivr.net/gh/gitldy1013/SMSPoster-Pro/img/weixinpay.jpg" alt="app"></a></p>
+<p align="center"><a href="https://leg.liudongyang.top" target="_blank" rel="noopener noreferrer"><img width="400" src="https://cdn.jsdelivr.net/gh/gitldy1013/SMSPoster-Pro/img/weixinpay.png" alt="app"></a></p>
 
 ## 免责声明
 
