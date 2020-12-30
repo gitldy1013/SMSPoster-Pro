@@ -17,7 +17,7 @@
 
 ## 展示效果如下(点击图片可以查看博客导航栏位演示地址)
 
-<p align="center"><a href="https://leg.liudongyang.top" target="_blank" rel="noopener noreferrer"><img width="400" src="https://cdn.jsdelivr.net/gh/gitldy1013/SMSPoster-Pro/img/app.jpg" alt="app"></a></p>
+<p align="center"><a href="https://leg.liudongyang.top" target="_blank" rel="noopener noreferrer"><img width="400" src="https://cdn.jsdelivr.net/gh/gitldy1013/SMSPoster-Pro/img/app00.jpg" alt="app"></a></p>
 
 <p align="center"><a href="https://leg.liudongyang.top" target="_blank" rel="noopener noreferrer"><img width="400" src="https://cdn.jsdelivr.net/gh/gitldy1013/SMSPoster-Pro/img/app04.jpg" alt="app"></a></p>
 
