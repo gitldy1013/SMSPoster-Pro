@@ -1,9 +1,11 @@
-package com.cmcc.smsposterpro;
+package com.cmcc.smsposterpro.utils;
 
 import android.content.Context;
 import android.database.Cursor;
 import android.provider.ContactsContract;
 import android.util.Log;
+
+import com.cmcc.smsposterpro.confing.MyContacts;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package com.cmcc.smsposterpro.util;
+package com.cmcc.smsposterpro.utils;
 
 public class StringUtils {
     public static String[] splitStrs(String strings) {

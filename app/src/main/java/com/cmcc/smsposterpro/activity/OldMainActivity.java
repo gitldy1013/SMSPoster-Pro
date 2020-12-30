@@ -1,4 +1,4 @@
-package com.cmcc.smsposterpro;
+package com.cmcc.smsposterpro.activity;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.text.method.ScrollingMovementMethod;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -22,12 +23,21 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.cmcc.smsposterpro.utils.ContactUtils;
+import com.cmcc.smsposterpro.confing.MyContacts;
+import com.cmcc.smsposterpro.confing.ObservableSMS;
+import com.cmcc.smsposterpro.utils.PostUtil;
+import com.cmcc.smsposterpro.R;
+import com.cmcc.smsposterpro.service.SMSReciver;
+import com.cmcc.smsposterpro.service.SMSSender;
+import com.cmcc.smsposterpro.service.SmsServer;
 import com.cmcc.smsposterpro.service.AliveService;
-import com.cmcc.smsposterpro.util.StringUtils;
+import com.cmcc.smsposterpro.utils.StringUtils;
 import com.xdandroid.hellodaemon.DaemonEnv;
 import com.xdandroid.hellodaemon.IntentWrapper;
 
@@ -35,23 +45,38 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static com.cmcc.smsposterpro.PostUtil.PostMsg;
+import static com.cmcc.smsposterpro.utils.PostUtil.PostMsg;
 
-public class MainActivity extends AppCompatActivity implements SmsServer {
+public class OldMainActivity extends AppCompatActivity implements SmsServer {
 
-    static boolean active = false;
+    public static boolean active = false;
 
     @RequiresApi(api = Build.VERSION_CODES.Q)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_old_main);
+        initActionbar();
         EditText editText = findViewById(R.id.edit_message);
         SharedPreferences sharedPref = getSharedPreferences("url", Context.MODE_PRIVATE);
         editText.setText(sharedPref.getString("url", SMSReciver.SMSURL));
         getPermission();
         ObservableSMS.getInstance().addObserver(this);
 //        startService(new Intent(getBaseContext(), NotKillService.class));
+    }
+
+    private void initActionbar() {
+        ActionBar actionBar = getSupportActionBar();
+        assert actionBar != null;
+        actionBar.setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == android.R.id.home){
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public void onClick(View v) {
@@ -106,12 +131,12 @@ public class MainActivity extends AppCompatActivity implements SmsServer {
                 }
             }
             if (flag) {
-                Toast.makeText(MainActivity.this, "授权成功!", Toast.LENGTH_LONG).show();
+                Toast.makeText(OldMainActivity.this, "授权成功!", Toast.LENGTH_LONG).show();
                 doView("授权成功!");
             } else {
-                Toast.makeText(MainActivity.this, "授权失败！", Toast.LENGTH_LONG).show();
+                Toast.makeText(OldMainActivity.this, "授权失败！", Toast.LENGTH_LONG).show();
                 doView("授权失败!");
-                dealwithPermiss(MainActivity.this, permissions[index]);
+                dealwithPermiss(OldMainActivity.this, permissions[index]);
             }
         }
     }
@@ -126,10 +151,10 @@ public class MainActivity extends AppCompatActivity implements SmsServer {
         editor.apply();
         if (getPermission()) {
             PostMsg(url, "10086", "测试信息。", this);
-            Toast.makeText(MainActivity.this, "设置成功", Toast.LENGTH_LONG).show();
+            Toast.makeText(OldMainActivity.this, "设置成功", Toast.LENGTH_LONG).show();
             doView("设置成功!已发送测试信息：10086：测试信息。");
         } else {
-            Toast.makeText(MainActivity.this, "需要先授权", Toast.LENGTH_LONG).show();
+            Toast.makeText(OldMainActivity.this, "需要先授权", Toast.LENGTH_LONG).show();
             doView("缺少必要权限！");
         }
     }
@@ -138,7 +163,7 @@ public class MainActivity extends AppCompatActivity implements SmsServer {
         EditText editText = findViewById(R.id.edit_phone);
         String phone = editText.getText().toString();
         SMSReciver.phones.add(phone);
-        Toast.makeText(MainActivity.this, "添加" + phone + "成功", Toast.LENGTH_LONG).show();
+        Toast.makeText(OldMainActivity.this, "添加" + phone + "成功", Toast.LENGTH_LONG).show();
         doView("添加" + phone + "成功!");
     }
 
@@ -146,7 +171,7 @@ public class MainActivity extends AppCompatActivity implements SmsServer {
         EditText editText = findViewById(R.id.edit_phone);
         String phone = editText.getText().toString();
         SMSReciver.phones.remove(phone);
-        Toast.makeText(MainActivity.this, "移除" + phone + "成功", Toast.LENGTH_LONG).show();
+        Toast.makeText(OldMainActivity.this, "移除" + phone + "成功", Toast.LENGTH_LONG).show();
         doView("移除" + phone + "成功!");
     }
 
@@ -194,7 +219,7 @@ public class MainActivity extends AppCompatActivity implements SmsServer {
 
     public void dealwithPermiss(final Activity context, String permission) {
         if (ActivityCompat.shouldShowRequestPermissionRationale(context, permission)) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+            AlertDialog.Builder builder = new AlertDialog.Builder(OldMainActivity.this);
             builder.setTitle("操作提示")
                     .setMessage("注意：当前缺少必要权限！\n请点击“设置”-“权限”-打开所需权限")
                     .setPositiveButton("去授权", new DialogInterface.OnClickListener() {
@@ -209,7 +234,7 @@ public class MainActivity extends AppCompatActivity implements SmsServer {
                     .setNegativeButton("取消", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            Toast.makeText(MainActivity.this, "取消操作", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(OldMainActivity.this, "取消操作", Toast.LENGTH_SHORT).show();
                         }
                     }).show();
 
@@ -219,10 +244,10 @@ public class MainActivity extends AppCompatActivity implements SmsServer {
     @RequiresApi(api = Build.VERSION_CODES.Q)
     public void showContacts(View view) {
         if (getPermission()) {
-            ArrayList<MyContacts> contacts = ContactUtils.getAllContacts(MainActivity.this);
+            ArrayList<MyContacts> contacts = ContactUtils.getAllContacts(OldMainActivity.this);
             doView(contacts.toString());
         } else {
-            Toast.makeText(MainActivity.this, "需要先授权", Toast.LENGTH_LONG).show();
+            Toast.makeText(OldMainActivity.this, "需要先授权", Toast.LENGTH_LONG).show();
             doView("缺少必要权限！");
         }
     }

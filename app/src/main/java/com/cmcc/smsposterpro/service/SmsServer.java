@@ -1,4 +1,6 @@
-package com.cmcc.smsposterpro;
+package com.cmcc.smsposterpro.service;
+
+import com.cmcc.smsposterpro.confing.ObservableSMS;
 
 import java.util.Map;
 

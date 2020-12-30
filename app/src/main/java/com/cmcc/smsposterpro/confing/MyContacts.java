@@ -1,4 +1,4 @@
-package com.cmcc.smsposterpro;
+package com.cmcc.smsposterpro.confing;
 
 public class MyContacts {
     public String name;

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">短信转发</string>
+    <string name="app_name">短信助手</string>
     <string name="edit_message">输入转发URL</string>
     <string name="button_send">保存</string>
     <string name="button_contacts">通讯</string>

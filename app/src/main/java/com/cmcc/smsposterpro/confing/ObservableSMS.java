@@ -1,4 +1,6 @@
-package com.cmcc.smsposterpro;
+package com.cmcc.smsposterpro.confing;
+
+import com.cmcc.smsposterpro.service.SmsServer;
 
 import java.util.Map;
 import java.util.Vector;

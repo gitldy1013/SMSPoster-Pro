@@ -15,7 +15,7 @@ import android.os.IBinder;
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
-import com.cmcc.smsposterpro.MainActivity;
+import com.cmcc.smsposterpro.activity.OldMainActivity;
 import com.cmcc.smsposterpro.R;
 
 public class NotKillService extends Service {
@@ -27,7 +27,7 @@ public class NotKillService extends Service {
     public void onCreate() {
         super.onCreate();
         registerNotificationChannel();
-        Intent notificationIntent = new Intent(this, MainActivity.class);
+        Intent notificationIntent = new Intent(this, OldMainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
                 notificationIntent, 0);
         int notifyId = (int) System.currentTimeMillis();

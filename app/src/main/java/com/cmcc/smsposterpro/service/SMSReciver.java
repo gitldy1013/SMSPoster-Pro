@@ -1,4 +1,4 @@
-package com.cmcc.smsposterpro;
+package com.cmcc.smsposterpro.service;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -9,13 +9,15 @@ import android.os.Bundle;
 import android.telephony.SmsMessage;
 import android.widget.Toast;
 
-import com.cmcc.smsposterpro.util.StringUtils;
+import com.cmcc.smsposterpro.confing.ObservableSMS;
+import com.cmcc.smsposterpro.utils.PostUtil;
+import com.cmcc.smsposterpro.utils.StringUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.cmcc.smsposterpro.MainActivity.active;
+import static com.cmcc.smsposterpro.activity.OldMainActivity.active;
 
 public class SMSReciver extends BroadcastReceiver {
 
