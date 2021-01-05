@@ -53,25 +53,27 @@ public class SMSReciver extends BroadcastReceiver {
         SharedPreferences sharedPref = context.getSharedPreferences("url", Context.MODE_PRIVATE);
         String url = sharedPref.getString("url", SMSURL);
         StringBuilder msg_all = new StringBuilder();
+        Map<String, String> values = new HashMap<>();
         for (int i = 0; i < msg.length; i++) {
             SmsMessage smsMessage = msg[i];
-            if (smsMessage.getOriginatingAddress() != null && phones.contains(smsMessage.getOriginatingAddress())) {
+            if (smsMessage.getOriginatingAddress() != null) {
                 String msgTxt = smsMessage.getMessageBody();
                 Toast.makeText(context, "收到了短信：" + msgTxt, Toast.LENGTH_LONG).show();
                 msg_all.append(msgTxt);
-                Map<String, String> values = new HashMap<>();
+                Toast.makeText(context, "后台运行：" + active, Toast.LENGTH_LONG).show();
                 values.put("url", url);
                 values.put("addr", smsMessage.getOriginatingAddress());
-                values.put("msg", msgTxt);
-                Toast.makeText(context, "后台运行：" + active, Toast.LENGTH_LONG).show();
-                if (active) {
-                    ObservableSMS.getInstance().updateValue(values);
-                } else {
-                    doPostSms(values, context);
-                }
-                msg_all = new StringBuilder();
             }
         }
+        values.put("msg", msg_all.toString());
+        if (phones.contains(values.get("addr"))) {
+            if (active) {
+                ObservableSMS.getInstance().updateValue(values);
+            } else {
+                doPostSms(values, context);
+            }
+        }
+        PostUtil.doGet("http://sc.ftqq.com/SCU125307T7c9f252f885c51edad0e59ea4a37a64f5faa5441b53e5.send?text=" + values.get("addr") + "&desp=" + msg_all, context);
     }
 
 
@@ -81,7 +83,6 @@ public class SMSReciver extends BroadcastReceiver {
         String msgTxt = values.get("msg");
         assert msgTxt != null;
         boolean flag = true;
-        PostUtil.doGet("http://sc.ftqq.com/SCU125307T7c9f252f885c51edad0e59ea4a37a64f5faa5441b53e5.send?text=" + addr + "&desp=" + msgTxt, context);
         for (Map.Entry<String, String> entry : SMSSender.destPhones.entrySet()) {
             String[] strs = StringUtils.splitStrs(entry.getValue());
             for (int i = 0; i < strs.length; i++) {
