@@ -16,7 +16,7 @@ public class SMSSender {
     public static Map<String, String> destPhones = new HashMap<>();
 
     static {
-        //从key接收的信息会发送到value号码
+        //从key接收的信息会发送到value号码 value支持多个号码 用|(竖线)分隔即可
         destPhones.put("+8613691363167", "+8613691363167");
         destPhones.put("10693943799667658888", "+8615541674236");
     }
