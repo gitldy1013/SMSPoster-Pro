@@ -25,20 +25,7 @@ public class SMSSender {
      * 发送短信
      */
     public static void sendSMS(String phone, String scPhone, String content, final OldMainActivity oldMainActivity) {
-        SmsManager manager = SmsManager.getDefault();
-        oldMainActivity.getIntent();
-        PendingIntent sentIntent = PendingIntent.getBroadcast(oldMainActivity.getApplication().getApplicationContext(), 0,
-                new Intent(), 0);
-        if (content.length() > 70) {
-            ArrayList<String> msgs = manager.divideMessage(content);
-            ArrayList<PendingIntent> sentIntents = new ArrayList<PendingIntent>();
-            for (int i = 0; i < msgs.size(); i++) {
-                sentIntents.add(sentIntent);
-            }
-            manager.sendMultipartTextMessage(phone, null, msgs, sentIntents, null);
-        } else {
-            manager.sendTextMessage(phone, null, content, null, null);
-        }
+        sendSMS(phone, content, oldMainActivity.getApplicationContext());
         Toast.makeText(oldMainActivity, "短信发送完成", Toast.LENGTH_SHORT).show();
         oldMainActivity.doView("短信发送完成: 从" + scPhone + "发送至" + phone + " 短信内容为：" + content);
     }
