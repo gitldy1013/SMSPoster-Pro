@@ -28,7 +28,7 @@ public class MessageReceiver extends BroadcastReceiver {
                 Object[] pdus = (Object[]) bundle.get("pdus");
                 for(int i = 0;i<pdus.length;i++){
                     SmsMessage sms = SmsMessage.createFromPdu((byte[]) pdus[i]);
-                    startSmsService(context, sms);
+                    ComponentName componentName = startSmsService(context, sms);
                 }
             }
         }
