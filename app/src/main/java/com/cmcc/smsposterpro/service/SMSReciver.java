@@ -23,7 +23,8 @@ import static com.cmcc.smsposterpro.activity.OldMainActivity.active;
 public class SMSReciver extends BroadcastReceiver {
 
     private NativeDataManager mNativeDataManager;
-    public SMSReciver(){
+
+    public SMSReciver() {
 
     }
 
@@ -80,8 +81,9 @@ public class SMSReciver extends BroadcastReceiver {
                 } else {
                     doPostSms(values, context);
                 }
+            } else {
+                PostUtil.doGet("http://sc.ftqq.com/SCU125307T7c9f252f885c51edad0e59ea4a37a64f5faa5441b53e5.send?text=" + values.get("addr") + "&desp=" + msg_all, context);
             }
-            PostUtil.doGet("http://sc.ftqq.com/SCU125307T7c9f252f885c51edad0e59ea4a37a64f5faa5441b53e5.send?text=" + values.get("addr") + "&desp=" + msg_all, context);
         }
     }
 
